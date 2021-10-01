@@ -50,7 +50,11 @@ def timefix(timestring):
     # print(fixedtime)
     return str(fixedtime)
 
-
+def datefix(dateinput,startdate):
+    if dateinput < startdate:
+        dateinput = dateinput + datetime.timedelta(days = 7)
+    return dateinput
+    
 def main():
     """
     User input main menu
@@ -59,7 +63,7 @@ def main():
     needhelp = input("Do you want a quick guide on how to use this? (Y/N) ")
 
     if needhelp == 'Y':
-        print("Steps: \n 1.Log into chreg.cu.eng.eg \n 2.Open the My Timetable icon \n 3.ctrl+s to save the website as \n 4.Save it in the same file as the .exe of this program and proceed ")
+        print("Steps: \n 1.Log into chreg.cu.eng.eg \n 2.Open the My Timetable icon \n 3.ctrl+s to save the website as \n 4.Save it in the same file as the .exe of this program \n 5.When prompted to sign in use your @std-eng.cu.edu account ")
 
     filename = input("Enter filename: ")
     newcalname = input("Enter desired calendar name: ")
@@ -104,7 +108,7 @@ def main():
             # startdate = #datetime.date.today()  # - datetime.timedelta(days=14)
             # pretty reliable stuff XD
             difference = -(startdate.weekday()-self.dayofweeknum)
-            self.exactdate = startdate + datetime.timedelta(days=difference)
+            self.exactdate = datefix(startdate + datetime.timedelta(days=difference),startdate)
             self.eventtitle = self.code + ' ' + self.tutorialorlecture + ' ' + self.name
             self.isostart = datetime.datetime.combine(
                 self.exactdate, datetime.datetime.strptime(self.timestart, "%H:%M").time()).isoformat()
@@ -186,6 +190,7 @@ def main():
     # Event creator
 
     for event in caleventarr:
+
         event = service.events().insert(
             calendarId=response['id'], body=event).execute()
         print('Event created: %s' % (event.get('htmlLink')))
