@@ -32,7 +32,10 @@ def weekdaytonum(weekday):
     elif weekday == 'Sunday':
         return 6
 
-# converts times between 1-7 to 24H
+
+"""
+Shifts times from 1-7pm to 24H format
+"""
 
 
 def timefix(timestring):
@@ -49,8 +52,15 @@ def timefix(timestring):
 
 
 def main():
+    """
+    User input main menu
+    """
 
-    # Taking user input
+    needhelp = input("Do you want a quick guide on how to use this? (Y/N) ")
+
+    if needhelp == 'Y':
+        print("Steps: \n 1.Log into chreg.cu.eng.eg \n 2.Open the My Timetable icon \n 3.ctrl+s to save the website as \n 4.Save it in the same file as the .exe of this program and proceed ")
+
     filename = input("Enter filename: ")
     newcalname = input("Enter desired calendar name: ")
 
@@ -64,14 +74,19 @@ def main():
         print("Exiting Program, nothing was done")
         sys.exit()
 
-    # Parsing html
-    eventarr = htmlparser.parsehtml(filename)
-
     # Timezone finder
     local_tz = str(get_localzone())
     print(local_tz)
 
-    # Event parsing block start
+    """
+    Calls the HTML parsing script
+    """
+
+    eventarr = htmlparser.parsehtml(filename)
+
+    """
+    Event parsing
+    """
 
     class eventobject:
 
@@ -133,10 +148,9 @@ def main():
                 # ],
             },
         })
-    # Event parsing end
 
-    """Shows basic usage of the Google Calendar API.
-    Prints the start and name of the next 10 events on the user's calendar.
+    """
+    Google Calendar API .
     """
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
@@ -176,7 +190,12 @@ def main():
             calendarId=response['id'], body=event).execute()
         print('Event created: %s' % (event.get('htmlLink')))
 
-    # service.calendars().clear('primary').execute()
+    confirmcreation = input(
+        "Are you sure you want to keep this calendar? (Y/N) ")
+
+    # deletes calendar if user doesnt want to keep it
+    if confirmcreation == 'N':
+        service.calendars().delete(calendarId=response['id']).execute()
 
 
 if __name__ == '__main__':
