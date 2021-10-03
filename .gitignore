@@ -1101,3 +1101,8 @@ dist/main/wheel-0.37.0-py3.9.egg-info/PKG-INFO
 dist/main/wheel-0.37.0-py3.9.egg-info/requires.txt
 dist/main/wheel-0.37.0-py3.9.egg-info/SOURCES.txt
 dist/main/wheel-0.37.0-py3.9.egg-info/top_level.txt
+token.json
+dist
+build
+.vscode
+__pycache__

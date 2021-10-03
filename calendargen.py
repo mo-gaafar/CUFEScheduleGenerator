@@ -9,8 +9,8 @@ from google.oauth2.credentials import Credentials
 from posixpath import split
 import htmlparser
 import datetime
-import pytz
-from tzlocal import get_localzone
+#import pytz
+#from tzlocal import get_localzone
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -50,11 +50,13 @@ def timefix(timestring):
     # print(fixedtime)
     return str(fixedtime)
 
-def datefix(dateinput,startdate):
+
+def datefix(dateinput, startdate):
     if dateinput < startdate:
-        dateinput = dateinput + datetime.timedelta(days = 7)
+        dateinput = dateinput + datetime.timedelta(days=7)
     return dateinput
-    
+
+
 def main():
     """
     User input main menu
@@ -79,8 +81,9 @@ def main():
         sys.exit()
 
     # Timezone finder
-    local_tz = str(get_localzone())
-    print(local_tz)
+    #local_tz = str(get_localzone())
+    # print(local_tz)
+    local_tz = "Africa/Cairo"
 
     """
     Calls the HTML parsing script
@@ -108,7 +111,8 @@ def main():
             # startdate = #datetime.date.today()  # - datetime.timedelta(days=14)
             # pretty reliable stuff XD
             difference = -(startdate.weekday()-self.dayofweeknum)
-            self.exactdate = datefix(startdate + datetime.timedelta(days=difference),startdate)
+            self.exactdate = datefix(
+                startdate + datetime.timedelta(days=difference), startdate)
             self.eventtitle = self.code + ' ' + self.tutorialorlecture + ' ' + self.name
             self.isostart = datetime.datetime.combine(
                 self.exactdate, datetime.datetime.strptime(self.timestart, "%H:%M").time()).isoformat()
