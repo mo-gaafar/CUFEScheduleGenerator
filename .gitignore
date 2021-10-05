@@ -1,10 +1,8 @@
-<<<<<<< HEAD
 token.json
 dist
 build
 .vscode
 __pycache__
-=======
 test2_files
 test_files
 test.html
@@ -15,4 +13,3 @@ __pycache__/quickstart.cpython-38.pyc
 dist
 /build
 build
->>>>>>> 2354a733b712c2cfb907b963a777f56e57c9915a
